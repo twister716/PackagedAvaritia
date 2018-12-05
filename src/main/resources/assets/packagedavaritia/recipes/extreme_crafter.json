@@ -1,0 +1,35 @@
+{
+    "type": "forge:ore_shaped",
+    "result": {
+        "item": "packagedavaritia:extreme_crafter",
+        "count": 1,
+        "data": 0
+    },
+    "pattern": [
+        "MCM",
+        "RTR",
+        "MHM"
+    ],
+    "key": {
+        "C": {
+            "item": "packagedauto:package_component",
+            "data": 0
+        },
+        "T": {
+            "item": "avaritia:extreme_crafting_table",
+            "data": 0
+        },
+        "H": {
+            "item": "minecraft:hopper",
+            "data": 0
+        },
+        "M": {
+            "item": "avaritia:resource",
+            "data": 1
+        },
+        "R": {
+            "type": "forge:ore_dict",
+            "ore": "dustRedstone"
+        }
+    }
+}

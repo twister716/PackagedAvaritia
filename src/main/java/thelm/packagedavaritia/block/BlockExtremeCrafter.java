@@ -21,6 +21,8 @@ public class BlockExtremeCrafter extends BlockBase {
 
 	public BlockExtremeCrafter() {
 		super(Material.IRON);
+		setHardness(15F);
+		setResistance(25F);
 		setSoundType(SoundType.METAL);
 		setUnlocalizedName("packagedavaritia.extreme_crafter");
 		setRegistryName("packagedavaritia:extreme_crafter");

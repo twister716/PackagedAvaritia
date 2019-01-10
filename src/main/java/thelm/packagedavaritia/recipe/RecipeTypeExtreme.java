@@ -1,27 +1,35 @@
 package thelm.packagedavaritia.recipe;
 
 import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntRBTreeSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
+import mezz.jei.api.gui.IGuiIngredient;
+import mezz.jei.api.gui.IRecipeLayout;
 import morph.avaritia.init.ModBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thelm.packagedauto.api.IRecipeInfo;
 import thelm.packagedauto.api.IRecipeType;
-import thelm.packagedavaritia.PackagedAvaritia;
 
 public class RecipeTypeExtreme implements IRecipeType {
 
 	public static final RecipeTypeExtreme INSTANCE = new RecipeTypeExtreme();
-	public static final ResourceLocation NAME = new ResourceLocation(PackagedAvaritia.MOD_ID, "extreme");
+	public static final ResourceLocation NAME = new ResourceLocation("packagedavaritia:extreme");
 	public static final IntSet SLOTS;
-	public static final Color COLOR = new Color(255, 255, 255, 0);
-	public static final Color COLOR_DISABLED = new Color(64, 64, 64, 255);
+	public static final List<String> CATEGORIES = Collections.singletonList("Avatitia.Extreme");
+	public static final Color COLOR = new Color(139, 139, 139);
+	public static final Color COLOR_DISABLED = new Color(64, 64, 64);
 
 	static {
 		SLOTS = new IntRBTreeSet();
@@ -63,6 +71,33 @@ public class RecipeTypeExtreme implements IRecipeType {
 	@Override
 	public boolean hasMachine() {
 		return true;
+	}
+
+	@Override
+	public List<String> getJEICategories() {
+		return CATEGORIES;
+	}
+
+	@Optional.Method(modid="jei")
+	@Override
+	public Int2ObjectMap<ItemStack> getRecipeTransferMap(IRecipeLayout recipeLayout, String category) {
+		Int2ObjectMap<ItemStack> map = new Int2ObjectOpenHashMap<>();
+		Map<Integer, ? extends IGuiIngredient<ItemStack>> ingredients = recipeLayout.getItemStacks().getGuiIngredients();
+		int index = 0;
+		for(Map.Entry<Integer, ? extends IGuiIngredient<ItemStack>> entry : ingredients.entrySet()) {
+			IGuiIngredient<ItemStack> ingredient = entry.getValue();
+			if(ingredient.isInput()) {
+				ItemStack displayed = entry.getValue().getDisplayedIngredient();
+				if(displayed != null && !displayed.isEmpty()) {
+					map.put(index, displayed);
+				}
+				++index;
+			}
+			if(index >= 81) {
+				break;
+			}
+		}
+		return map;
 	}
 
 	@SideOnly(Side.CLIENT)

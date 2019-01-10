@@ -5,29 +5,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import morph.avaritia.recipe.AvaritiaRecipeManager;
 import morph.avaritia.recipe.extreme.IExtremeRecipe;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.crafting.IngredientNBT;
+import net.minecraft.world.World;
 import thelm.packagedauto.api.IPackagePattern;
 import thelm.packagedauto.api.IRecipeType;
 import thelm.packagedauto.api.MiscUtil;
+import thelm.packagedauto.container.ContainerEmpty;
 import thelm.packagedauto.util.PatternHelper;
 
 public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 
 	IExtremeRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
-	InventoryCrafting matrix = new InventoryCrafting(new Container() {@Override public boolean canInteractWith(EntityPlayer playerIn) {return false;}}, 9, 9);
+	InventoryCrafting matrix = new InventoryCrafting(new ContainerEmpty(), 9, 9);
 	ItemStack output;
 	List<IPackagePattern> patterns = new ArrayList<>();
 
@@ -44,7 +42,7 @@ public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 		}
 		if(recipe != null) {
 			MiscUtil.loadAllItems(nbt.getTagList("Input", 10), input);
-			output = recipe.getRecipeOutput().copy();
+			output = recipe.getCraftingResult(matrix).copy();
 			for(int i = 0; i*9 < input.size(); ++i) {
 				patterns.add(new PatternHelper(this, i));
 			}
@@ -88,11 +86,6 @@ public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 	}
 
 	@Override
-	public List<ItemStack> getOutputs() {
-		return Collections.singletonList(output);
-	}
-
-	@Override
 	public ItemStack getOutput() {
 		return output.copy();
 	}
@@ -108,7 +101,7 @@ public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 	}
 
 	@Override
-	public void generateFromStacks(List<ItemStack> input, List<ItemStack> output) {
+	public void generateFromStacks(List<ItemStack> input, List<ItemStack> output, World world) {
 		recipe = null;
 		this.input.clear();
 		patterns.clear();
@@ -118,16 +111,26 @@ public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 			matrix.setInventorySlotContents(i, toSet.copy());
 		}
 		for(IExtremeRecipe recipe : AvaritiaRecipeManager.EXTREME_RECIPES.values()) {
-			if(recipe.matches(matrix, null)) {
+			if(recipe.matches(matrix, world)) {
 				this.recipe = recipe;
 				this.input.addAll(MiscUtil.condenseStacks(input));
-				this.output = recipe.getRecipeOutput().copy();
+				this.output = recipe.getCraftingResult(matrix).copy();
 				for(int i = 0; i*9 < this.input.size(); ++i) {
 					patterns.add(new PatternHelper(this, i));
 				}
-				break;
+				return;
 			}
 		}
+		matrix.clear();
+	}
+
+	@Override
+	public Int2ObjectMap<ItemStack> getEncoderStacks() {
+		Int2ObjectMap<ItemStack> map = new Int2ObjectOpenHashMap<>();
+		for(int i = 0; i < 81; ++i) {
+			map.put(i, matrix.getStackInSlot(i));
+		}
+		return map;
 	}
 
 	@Override

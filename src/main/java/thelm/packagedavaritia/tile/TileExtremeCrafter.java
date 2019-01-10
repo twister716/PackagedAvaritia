@@ -43,9 +43,9 @@ import thelm.packagedavaritia.recipe.IRecipeInfoExtreme;
 })
 public class TileExtremeCrafter extends TileBase implements ITickable, IPackageCraftingMachine, IGridHost, IActionHost {
 
-	public static int maxEnergy = 5000;
-	public static int maxProgress = 500;
-	public static int maxEnergyUsage = 100;
+	public static int energyCapacity = 5000;
+	public static int energyReq = 500;
+	public static int energyUsage = 100;
 
 	public boolean isWorking = false;
 	public int remainingProgress = 0;
@@ -53,7 +53,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 
 	public TileExtremeCrafter() {
 		setInventory(new InventoryExtremeCrafter(this));
-		setEnergyStorage(new EnergyStorage(this, maxEnergy));
+		setEnergyStorage(new EnergyStorage(this, energyCapacity));
 	}
 
 	@Override
@@ -78,6 +78,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 					}
 				}
 			}
+			chargeEnergy();
 			if(world.getTotalWorldTime() % 8 == 0) {
 				if(hostHelper != null && hostHelper.isActive()) {
 					hostHelper.ejectItem();
@@ -87,7 +88,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 					ejectItems();
 				}
 			}
-			chargeEnergy();
+			energyStorage.updateIfChanged();
 		}
 	}
 
@@ -100,7 +101,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 			if(slotStack.isEmpty() || slotStack.getItem() == outputStack.getItem() && slotStack.getItemDamage() == outputStack.getItemDamage() && ItemStack.areItemStackShareTagsEqual(slotStack, outputStack) && slotStack.getCount()+outputStack.getCount() <= outputStack.getMaxStackSize()) {
 				currentRecipe = recipe;
 				isWorking = true;
-				remainingProgress = maxProgress;
+				remainingProgress = energyReq;
 				for(int i = 0; i < 81; ++i) {
 					inventory.setInventorySlotContents(i, recipe.getMatrix().getStackInSlot(i).copy());
 				}
@@ -116,7 +117,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 	}
 
 	protected void tickProcess() {
-		int energy = energyStorage.extractEnergy(maxEnergyUsage, false);
+		int energy = energyStorage.extractEnergy(energyUsage, false);
 		remainingProgress -= energy;
 	}
 
@@ -274,7 +275,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 		if(remainingProgress <= 0) {
 			return 0;
 		}
-		return scale * (maxProgress-remainingProgress) / maxProgress;
+		return scale * (energyReq-remainingProgress) / energyReq;
 	}
 
 	@SideOnly(Side.CLIENT)

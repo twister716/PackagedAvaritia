@@ -1,5 +1,8 @@
 package thelm.packagedavaritia.recipe;
 
+import java.util.Collections;
+import java.util.List;
+
 import morph.avaritia.recipe.extreme.IExtremeRecipe;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -12,4 +15,9 @@ public interface IRecipeInfoExtreme extends IRecipeInfo {
 	IExtremeRecipe getRecipe();
 
 	InventoryCrafting getMatrix();
+
+	@Override
+	default List<ItemStack> getOutputs() {
+		return Collections.singletonList(getOutput());
+	}
 }

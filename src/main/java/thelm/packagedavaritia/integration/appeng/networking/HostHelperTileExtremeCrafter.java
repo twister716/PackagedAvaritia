@@ -3,6 +3,7 @@ package thelm.packagedavaritia.integration.appeng.networking;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
 import appeng.api.config.PowerMultiplier;
+import appeng.api.networking.GridFlags;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.energy.IEnergyGrid;
 import appeng.api.networking.storage.IStorageGrid;
@@ -17,6 +18,7 @@ public class HostHelperTileExtremeCrafter extends HostHelperTile<TileExtremeCraf
 
 	public HostHelperTileExtremeCrafter(TileExtremeCrafter tile) {
 		super(tile);
+		gridBlock.flags.remove(GridFlags.REQUIRE_CHANNEL);
 	}
 
 	public void ejectItem() {

@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thelm.packagedauto.block.BlockBase;
 import thelm.packagedauto.tile.TileBase;
+import thelm.packagedavaritia.PackagedAvaritia;
 import thelm.packagedavaritia.tile.TileExtremeCrafter;
 
 public class BlockExtremeCrafter extends BlockBase {
@@ -26,6 +27,7 @@ public class BlockExtremeCrafter extends BlockBase {
 		setSoundType(SoundType.METAL);
 		setUnlocalizedName("packagedavaritia.extreme_crafter");
 		setRegistryName("packagedavaritia:extreme_crafter");
+		setCreativeTab(PackagedAvaritia.CREATIVE_TAB);
 	}
 
 	@Override

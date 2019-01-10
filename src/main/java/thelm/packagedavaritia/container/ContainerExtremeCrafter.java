@@ -23,7 +23,7 @@ public class ContainerExtremeCrafter extends ContainerTileBase<TileExtremeCrafte
 
 	@Override
 	public int getPlayerInvX() {
-		return 56;
+		return 55;
 	}
 
 	@Override

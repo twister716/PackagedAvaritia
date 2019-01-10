@@ -3,12 +3,9 @@ package thelm.packagedavaritia.proxy;
 import java.util.ArrayList;
 import java.util.List;
 
-import codechicken.lib.model.ModelRegistryHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import thelm.packagedauto.client.IModelRegister;
-import thelm.packagedauto.client.ModelUtil;
 
 public class ClientProxy extends CommonProxy {
 
@@ -31,7 +28,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void registerModels() {
+	protected void registerModels() {
 		for(IModelRegister model : modelRegisterList) {
 			model.registerModels();
 		}

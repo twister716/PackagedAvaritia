@@ -52,7 +52,12 @@ public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		if(recipe != null) {
-			nbt.setString("Recipe", recipe.getRegistryName().toString());
+			ResourceLocation recipeName = recipe.getRegistryName();
+			if(recipeName == null) {
+				recipeName = AvaritiaRecipeManager.EXTREME_RECIPES.entrySet().stream().filter(entry->entry.getValue().equals(recipe)).findAny().get().getKey();
+				recipe.setRegistryName(recipeName);
+			}
+			nbt.setString("Recipe", recipeName.toString());
 		}
 		NBTTagList inputTag = MiscUtil.saveAllItems(new NBTTagList(), input);
 		nbt.setTag("Input", inputTag);

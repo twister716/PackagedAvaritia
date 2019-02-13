@@ -27,6 +27,7 @@ public class PackagedAvaritiaConfig {
 		TileExtremeCrafter.energyCapacity = config.get(category, "energy_capacity", 5000, "How much FE the Extreme Package Crafter should hold.", 0, Integer.MAX_VALUE).getInt();
 		TileExtremeCrafter.energyReq = config.get(category, "energy_req", 500, "How much FE the Extreme Package Crafter should use.", 0, Integer.MAX_VALUE).getInt();
 		TileExtremeCrafter.energyUsage = config.get(category, "energy_usage", 100, "How much FE/t maximum the Extreme Package Crafter should use.", 0, Integer.MAX_VALUE).getInt();
+		TileExtremeCrafter.drawMEEnergy = config.get(category, "draw_me_energy", TileExtremeCrafter.drawMEEnergy, "Should the Extreme Packager Crafter draw energy from ME systems.").getBoolean();
 		if(config.hasChanged()) {
 			config.save();
 		}

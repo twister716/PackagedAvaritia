@@ -46,6 +46,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 	public static int energyCapacity = 5000;
 	public static int energyReq = 500;
 	public static int energyUsage = 100;
+	public static boolean drawMEEnergy = true;
 
 	public boolean isWorking = false;
 	public int remainingProgress = 0;
@@ -71,7 +72,6 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 					finishProcess();
 					if(hostHelper != null && hostHelper.isActive()) {
 						hostHelper.ejectItem();
-						hostHelper.chargeEnergy();
 					}
 					else {
 						ejectItems();
@@ -82,7 +82,9 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 			if(world.getTotalWorldTime() % 8 == 0) {
 				if(hostHelper != null && hostHelper.isActive()) {
 					hostHelper.ejectItem();
-					hostHelper.chargeEnergy();
+					if(drawMEEnergy) {
+						hostHelper.chargeEnergy();
+					}
 				}
 				else {
 					ejectItems();

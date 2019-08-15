@@ -25,7 +25,7 @@ public class BlockExtremeCrafter extends BlockBase {
 		setHardness(15F);
 		setResistance(25F);
 		setSoundType(SoundType.METAL);
-		setUnlocalizedName("packagedavaritia.extreme_crafter");
+		setTranslationKey("packagedavaritia.extreme_crafter");
 		setRegistryName("packagedavaritia:extreme_crafter");
 		setCreativeTab(PackagedAvaritia.CREATIVE_TAB);
 	}

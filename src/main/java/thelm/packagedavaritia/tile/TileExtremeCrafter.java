@@ -2,6 +2,7 @@ package thelm.packagedavaritia.tile;
 
 import java.util.List;
 
+import appeng.api.AEApi;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.security.IActionHost;
@@ -31,6 +32,7 @@ import thelm.packagedauto.api.MiscUtil;
 import thelm.packagedauto.api.RecipeTypeRegistry;
 import thelm.packagedauto.energy.EnergyStorage;
 import thelm.packagedauto.tile.TileBase;
+import thelm.packagedauto.tile.TileUnpackager;
 import thelm.packagedavaritia.client.gui.GuiExtremeCrafter;
 import thelm.packagedavaritia.container.ContainerExtremeCrafter;
 import thelm.packagedavaritia.integration.appeng.networking.HostHelperTileExtremeCrafter;
@@ -55,6 +57,9 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 	public TileExtremeCrafter() {
 		setInventory(new InventoryExtremeCrafter(this));
 		setEnergyStorage(new EnergyStorage(this, energyCapacity));
+		if(Loader.isModLoaded("appliedenergistics2")) {
+			hostHelper = new HostHelperTileExtremeCrafter(this);
+		}
 	}
 
 	@Override
@@ -107,6 +112,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 				for(int i = 0; i < 81; ++i) {
 					inventory.setInventorySlotContents(i, recipe.getMatrix().getStackInSlot(i).copy());
 				}
+				markDirty();
 				return true;
 			}
 		}
@@ -144,7 +150,6 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 		remainingProgress = 0;
 		isWorking = false;
 		currentRecipe = null;
-		syncTile(false);
 		markDirty();
 	}
 
@@ -152,7 +157,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 		int endIndex = isWorking ? 81 : 0;
 		for(EnumFacing facing : EnumFacing.VALUES) {
 			TileEntity tile = world.getTileEntity(pos.offset(facing));
-			if(tile != null && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())) {
+			if(tile != null && !(tile instanceof TileUnpackager) && tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite())) {
 				IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
 				boolean flag = true;
 				for(int i = 81; i >= endIndex; --i) {
@@ -201,11 +206,11 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 		}
 	}
 
+	@Optional.Method(modid="appliedenergistics2")
 	@Override
-	public void onLoad() {
-		if(Loader.isModLoaded("appliedenergistics2")) {
-			hostHelper = new HostHelperTileExtremeCrafter(this);
-		}
+	public void setPlacer(EntityPlayer placer) {
+		super.setPlacer(placer);
+		getActionableNode().setPlayerID(AEApi.instance().registries().players().getID(placer));
 	}
 
 	@Optional.Method(modid="appliedenergistics2")
@@ -227,17 +232,13 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 	@Optional.Method(modid="appliedenergistics2")
 	@Override
 	public IGridNode getActionableNode() {
-		if(hostHelper == null) {
-			hostHelper = new HostHelperTileExtremeCrafter(this);
-		}
 		return hostHelper.getNode();
 	}
 
 	@Override
-	public void readSyncNBT(NBTTagCompound nbt) {
-		super.readSyncNBT(nbt);
-		isWorking = nbt.getBoolean("Working");
-		remainingProgress = nbt.getInteger("Progress");
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		currentRecipe = null;
 		if(nbt.hasKey("Recipe")) {
 			NBTTagCompound tag = nbt.getCompoundTag("Recipe");
 			IRecipeType recipeType = RecipeTypeRegistry.getRecipeType(new ResourceLocation(tag.getString("RecipeType")));
@@ -251,6 +252,30 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 				}
 			}
 		}
+		if(hostHelper != null) {
+			hostHelper.readFromNBT(nbt);
+		}
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		if(currentRecipe != null) {
+			NBTTagCompound tag = currentRecipe.writeToNBT(new NBTTagCompound());
+			tag.setString("RecipeType", currentRecipe.getRecipeType().getName().toString());
+			nbt.setTag("Recipe", tag);
+		}
+		if(hostHelper != null) {
+			hostHelper.writeToNBT(nbt);
+		}
+		return nbt;
+	}
+
+	@Override
+	public void readSyncNBT(NBTTagCompound nbt) {
+		super.readSyncNBT(nbt);
+		isWorking = nbt.getBoolean("Working");
+		remainingProgress = nbt.getInteger("Progress");
 	}
 
 	@Override
@@ -258,11 +283,6 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 		super.writeSyncNBT(nbt);
 		nbt.setBoolean("Working", isWorking);
 		nbt.setInteger("Progress", remainingProgress);
-		if(currentRecipe != null) {
-			NBTTagCompound tag = currentRecipe.writeToNBT(new NBTTagCompound());
-			tag.setString("RecipeType", currentRecipe.getRecipeType().getName().toString());
-			nbt.setTag("Recipe", tag);
-		}
 		return nbt;
 	}
 

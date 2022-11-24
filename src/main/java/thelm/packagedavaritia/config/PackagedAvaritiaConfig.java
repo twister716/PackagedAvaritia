@@ -1,42 +1,47 @@
 package thelm.packagedavaritia.config;
 
-import java.io.File;
-
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import thelm.packagedavaritia.tile.TileExtremeCrafter;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+import thelm.packagedavaritia.block.entity.ExtremeCrafterBlockEntity;
 
 public class PackagedAvaritiaConfig {
 
 	private PackagedAvaritiaConfig() {}
 
-	public static Configuration config;
+	private static ForgeConfigSpec serverSpec;
 
-	public static void init(File file) {
-		MinecraftForge.EVENT_BUS.register(PackagedAvaritiaConfig.class);
-		config = new Configuration(file);
-		config.load();
-		init();
+	public static ForgeConfigSpec.IntValue extremeCrafterEnergyCapacity;
+	public static ForgeConfigSpec.IntValue extremeCrafterEnergyReq;
+	public static ForgeConfigSpec.IntValue extremeCrafterEnergyUsage;
+	public static ForgeConfigSpec.BooleanValue extremeCrafterDrawMEEnergy;
+
+	public static void registerConfig() {
+		buildConfig();
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, serverSpec);
 	}
 
-	public static void init() {
-		String category;
-		category = "blocks.extreme_crafter";
-		TileExtremeCrafter.energyCapacity = config.get(category, "energy_capacity", 5000, "How much FE the Extreme Package Crafter should hold.", 0, Integer.MAX_VALUE).getInt();
-		TileExtremeCrafter.energyReq = config.get(category, "energy_req", 500, "How much FE the Extreme Package Crafter should use.", 0, Integer.MAX_VALUE).getInt();
-		TileExtremeCrafter.energyUsage = config.get(category, "energy_usage", 100, "How much FE/t maximum the Extreme Package Crafter should use.", 0, Integer.MAX_VALUE).getInt();
-		TileExtremeCrafter.drawMEEnergy = config.get(category, "draw_me_energy", TileExtremeCrafter.drawMEEnergy, "Should the Extreme Packager Crafter draw energy from ME systems.").getBoolean();
-		if(config.hasChanged()) {
-			config.save();
-		}
+	private static void buildConfig() {
+		ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+
+		builder.push("extreme_crafter");
+		builder.comment("How much FE the Extreme Package Crafter should hold.");
+		extremeCrafterEnergyCapacity = builder.defineInRange("energy_capacity", 5000, 0, Integer.MAX_VALUE);
+		builder.comment("How much total FE the Extreme Package Crafter should use per operation.");
+		extremeCrafterEnergyReq = builder.defineInRange("energy_req", 5000, 0, Integer.MAX_VALUE);
+		builder.comment("How much FE/t maximum the Extreme Package Crafter can use.");
+		extremeCrafterEnergyUsage = builder.defineInRange("energy_usage", 500, 0, Integer.MAX_VALUE);
+		builder.comment("Should the Extreme Package Crafter draw energy from ME systems.");
+		extremeCrafterDrawMEEnergy = builder.define("draw_me_energy", true);
+		builder.pop();
+
+		serverSpec = builder.build();
 	}
 
-	@SubscribeEvent
-	public void onConfigChanged(OnConfigChangedEvent event) {
-		if(event.getModID().equals("packagedavaritia")) {
-			init();
-		}
+	public static void reloadServerConfig() {
+		ExtremeCrafterBlockEntity.energyCapacity = extremeCrafterEnergyCapacity.get();
+		ExtremeCrafterBlockEntity.energyReq = extremeCrafterEnergyReq.get();
+		ExtremeCrafterBlockEntity.energyUsage = extremeCrafterEnergyUsage.get();
+		ExtremeCrafterBlockEntity.drawMEEnergy = extremeCrafterDrawMEEnergy.get();
 	}
 }

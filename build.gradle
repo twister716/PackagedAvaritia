@@ -1,33 +1,50 @@
 buildscript {
     repositories {
-        jcenter()
         maven {
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://maven.minecraftforge.net/"
+        }
+        maven {
+            url = "https://libraries.minecraft.net/"
         }
         maven {
             url = "https://plugins.gradle.org/m2/"
         }
         maven {
-            url = "https://jitpack.io/"
+            url = "https://repo.spongepowered.org/maven/"
         }
+        maven {
+            url = "https://maven.parchmentmc.org/"
+        }
+        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath "com.wynprice.cursemaven:CurseMaven:2.1.5"
-        //classpath "com.github.Wyn-Price:CurseMaven:f0d58155e6"
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
+        classpath "org.parchmentmc:librarian:1.+"
     }
 }
 
-apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: "com.wynprice.cursemaven"
+apply plugin: "net.minecraftforge.gradle"
+apply plugin: "eclipse"
+apply plugin: "maven-publish"
+apply plugin: "org.parchmentmc.librarian.forgegradle"
 
 repositories {
     jcenter()
-    maven {
-        url = "https://maven.blamejared.com"
+    flatDir {
+        dirs "libs"
     }
     maven {
-        url = "https://dvs1.progwml6.com/files/maven"
+        url = "https://repo.spongepowered.org/maven/"
+    }
+    maven {
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        url = "https://maven.tterrag.com/"
+    }
+    maven {
+        url = "https://maven.blamejared.com/"
     }
     maven {
         url = "https://maven.covers1624.net/"
@@ -36,66 +53,83 @@ repositories {
         url = "https://jitpack.io/"
     }
     maven {
-        url = "https://modmaven.k-4u.nl/" 
+        url = "https://cursemaven.com/"
+		content {
+            includeGroup "curse.maven"
+        }
+    }
+    maven {
+        url = "https://modmaven.dev/"
     }
 }
 
-version = "1.12.2-1.0.2.5"
-group= "thelm.packagedavaritia"
-archivesBaseName = "PackagedAvaritia"
-
-sourceCompatibility = targetCompatibility = "1.8"
-compileJava {
-    sourceCompatibility = targetCompatibility = "1.8"
+sourceSets {
+    main
 }
 
+version = "3.1.0.2"
+group = "thelm.packagedexcrafting"
+archivesBaseName = "PackagedExCrafting-1.18.2"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
 minecraft {
-    version = "1.12.2-14.23.5.2847"
-    runDir = "run"
-    mappings = "stable_39"
-    makeObfSourceJar = false
+    mappings channel: "parchment", version: "2022.09.04-1.18.2"
+    runs {
+        client = {
+            properties "forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP"
+            properties "forge.logging.console.level": "debug"
+            properties "mixin.env.remapRefMap": "true"
+            properties "mixin.env.refMapRemappingFile": "${projectDir}/build/createSrgToMcp/output.srg".toString()
+            workingDirectory project.file("run").canonicalPath
+            source sourceSets.main
+        }
+        server = {
+            properties "forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP"
+            properties "forge.logging.console.level": "debug"
+            properties "mixin.env.remapRefMap": "true"
+            properties "mixin.env.refMapRemappingFile": "${projectDir}/build/createSrgToMcp/output.srg".toString()
+            workingDirectory project.file("run").canonicalPath
+            source sourceSets.main
+        }
+    }
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.12.2:4.15.0.273"
-    deobfCompile "codechicken:CodeChickenLib:1.12.2-3.2.3.357:universal"
-    deobfCompile "cofh:RedstoneFlux:1.12-2.1.0.6:universal"
-    deobfCompile("cofh:CoFHCore:1.12.2-4.6.3.27:universal") {
-        transitive = false
-    }
-    deobfCompile("cofh:CoFHWorld:1.12.2-1.3.1.7:universal") {
-        transitive = false
-    }
-    deobfCompile("cofh:ThermalFoundation:1.12.2-2.6.3.27:universal") {
-        transitive = false
-    }
-    deobfCompile("cofh:ThermalExpansion:1.12.2-5.5.4.43:universal") {
-        transitive = false
-    }
-    deobfCompile("cofh:ThermalDynamics:1.12.2-2.5.5.21:universal") {
-        transitive = false
-    }
-	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.0.9.285"
-    deobfCompile("appeng:appliedenergistics2:rv6-stable-7") {
-        transitive = false
-    }
-    deobfCompile("morph.avaritia:Avaritia:1.12.2-3.3.0.33:universal") {
-        transitive = false
-    }
+    minecraft "net.minecraftforge:forge:1.18.2-40.1.85"
 
-    deobfCompile "com.github.TheLMiffy1111:PackagedAuto:60226d3aba"
+    implementation fg.deobf("appeng:appliedenergistics2-forge:11.6.4")
+    implementation fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281")
+    implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-1.18.2:9.1.197")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
+    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-1.18.2:0.6.5-91")
+    implementation fg.deobf("com.simibubi.create:create-1.18.2:0.5.0.e-196:all")
+    implementation fg.deobf("mekanism:Mekanism:1.18.2-10.2.5.465")
+    implementation fg.deobf("mekanism:Mekanism:1.18.2-10.2.5.465:generators")
+    implementation fg.deobf("codechicken:CodeChickenLib:1.18.2-4.1.2.479:universal")
+
+    //JitPack
+
+    //CurseMaven
+    implementation fg.deobf("curse.maven:shutup-experimental-settings-407174:3759881")
+    implementation fg.deobf("curse.maven:packagedauto-308380:4109215")
+    implementation fg.deobf("curse.maven:applied-mekanistics-574300:3968835")
+    implementation fg.deobf("curse.maven:cucumber-272335:4005476")
+    implementation fg.deobf("curse.maven:extended-crafting-268387:3885707")
+    implementation fg.deobf("curse.maven:avaritia-1-10-261348:4074018")
+    implementation fg.deobf("curse.maven:ato-405593:3975599")
 }
 
-processResources
-{
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "PackagedExCrafting",
+                "Specification-Vendor": "thelm",
+                "Specification-Version": "3",
+                "Implementation-Title": "${archivesBaseName}",
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor": "thelm"
+                //"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ],)
+    }
 }
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
-}
-
-artifacts {
-    archives deobfJar
-}
-

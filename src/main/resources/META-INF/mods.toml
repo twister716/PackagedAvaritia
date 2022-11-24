@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="MIT"
+issueTrackerURL="https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/packagedavaritia"
+authors="TheLMiffy1111"
+[[mods]]
+modId="packagedavaritia"
+version="${file.jarVersion}"
+displayName="PackagedAvaritia"
+description="A PackagedAuto addon that adds Avaritia autocrafting."
+
+[[dependencies.packagedavaritia]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.packagedavaritia]]
+    modId="avaritia"
+    mandatory=true
+    versionRange="[4.0.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.packagedavaritia]]
+    modId="packagedauto"
+    mandatory=true
+    versionRange="[3.1.0.2,)"
+    ordering="NONE"
+    side="BOTH"

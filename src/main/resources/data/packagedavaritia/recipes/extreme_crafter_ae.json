@@ -1,5 +1,11 @@
 {
-    "type": "forge:ore_shaped",
+    "conditions": [
+        {
+            "type": "forge:mod_loaded",
+            "modid": "ae2"
+        }
+    ],
+    "type": "minecraft:crafting_shaped",
     "result": {
         "item": "packagedavaritia:extreme_crafter",
         "count": 1
@@ -11,7 +17,7 @@
     ],
     "key": {
         "C": {
-            "item": "#machine_package_component"
+            "item": "packagedauto:me_package_component"
         },
         "T": {
             "item": "avaritia:extreme_crafting_table"
@@ -20,12 +26,10 @@
             "item": "minecraft:hopper"
         },
         "M": {
-            "item": "avaritia:resource",
-            "data": 1
+            "item": "avaritia:crystal_matrix_ingot"
         },
         "R": {
-            "type": "forge:ore_dict",
-            "ore": "dustRedstone"
+            "tag": "forge:dusts/redstone"
         }
     }
 }

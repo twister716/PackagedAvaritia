@@ -123,9 +123,9 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title": "PackagedExCrafting",
+                "Specification-Title": "PackagedAvaritia",
                 "Specification-Vendor": "thelm",
-                "Specification-Version": "3",
+                "Specification-Version": "2",
                 "Implementation-Title": "${archivesBaseName}",
                 "Implementation-Version": "${version}",
                 "Implementation-Vendor": "thelm"

@@ -47,7 +47,7 @@ repositories {
 }
 
 version = "1.12.2-1.0.2.5"
-group= "thelm.packagedavaritia"
+group = "thelm.packagedavaritia"
 archivesBaseName = "PackagedAvaritia"
 
 sourceCompatibility = targetCompatibility = "1.8"
@@ -60,6 +60,7 @@ minecraft {
     version = "1.12.2-14.23.5.2847"
     runDir = "run"
     mappings = "stable_39"
+    clientRunArgs.add("--username=Dev")
     makeObfSourceJar = false
 }
 
@@ -82,16 +83,16 @@ dependencies {
     deobfCompile "curse.maven:thermal-dynamics-227443:2920505"
 }
 
-processResources
-{
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "PackagedAvaritia",
+                "Specification-Vendor": "thelm",
+                "Specification-Version": "1",
+                "Implementation-Title": "${archivesBaseName}",
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor": "thelm"
+                //"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ],)
+    }
 }
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
-}
-
-artifacts {
-    archives deobfJar
-}
-

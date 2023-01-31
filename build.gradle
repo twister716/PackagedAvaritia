@@ -25,9 +25,9 @@ buildscript {
 }
 
 apply plugin: "net.minecraftforge.gradle"
+apply plugin: "org.parchmentmc.librarian.forgegradle"
 apply plugin: "eclipse"
 apply plugin: "maven-publish"
-apply plugin: "org.parchmentmc.librarian.forgegradle"
 
 repositories {
     jcenter()
@@ -67,7 +67,7 @@ sourceSets {
     main
 }
 
-version = "2.0.0.1"
+version = "2.0.0.2"
 group = "thelm.packagedavaritia"
 archivesBaseName = "PackagedAvaritia-1.18.2"
 
@@ -111,7 +111,7 @@ dependencies {
 
     //CurseMaven
     implementation fg.deobf("curse.maven:shutup-experimental-settings-407174:3759881")
-    implementation fg.deobf("curse.maven:packagedauto-308380:4366298")
+    implementation fg.deobf("curse.maven:packagedauto-308380:4374408")
     implementation fg.deobf("curse.maven:applied-mekanistics-574300:3968835")
     implementation fg.deobf("curse.maven:cucumber-272335:4005476")
     implementation fg.deobf("curse.maven:extended-crafting-268387:3885707")

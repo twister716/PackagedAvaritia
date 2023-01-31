@@ -65,7 +65,6 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 			if(isWorking) {
 				tickProcess();
 				if(remainingProgress <= 0) {
-					energyStorage.receiveEnergy(Math.abs(remainingProgress), false);
 					finishProcess();
 					ejectItems();
 				}
@@ -103,7 +102,7 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 	}
 
 	protected void tickProcess() {
-		int energy = energyStorage.extractEnergy(energyUsage, false);
+		int energy = energyStorage.extractEnergy(Math.min(energyUsage, remainingProgress), false);
 		remainingProgress -= energy;
 	}
 

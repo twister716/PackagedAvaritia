@@ -73,7 +73,7 @@ dependencies {
         transitive = false
     }
 
-    deobfCompile "curse.maven:packagedauto-308380:4376035"
+    deobfCompile "curse.maven:packagedauto-308380:4420185"
     deobfCompile "curse.maven:applied-energistics-2-223794:2747063"
     deobfCompile "curse.maven:redstone-flux-270789:2920436"
     deobfCompile "curse.maven:cofh-core-69162:2920433"

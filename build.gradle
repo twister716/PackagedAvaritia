@@ -46,7 +46,7 @@ repositories {
     }
 }
 
-version = "1.12.2-1.0.2.8"
+version = "1.12.2-1.0.2.9"
 group = "thelm.packagedavaritia"
 archivesBaseName = "PackagedAvaritia"
 
@@ -73,7 +73,7 @@ dependencies {
         transitive = false
     }
 
-    deobfCompile "curse.maven:packagedauto-308380:4449683"
+    deobfCompile "curse.maven:packagedauto-308380:4478952"
     deobfCompile "curse.maven:applied-energistics-2-223794:2747063"
     deobfCompile "curse.maven:redstone-flux-270789:2920436"
     deobfCompile "curse.maven:cofh-core-69162:2920433"

@@ -1,5 +1,7 @@
 package thelm.packagedavaritia.inventory;
 
+import java.util.stream.IntStream;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -13,6 +15,7 @@ public class InventoryExtremeCrafter extends InventoryTileBase {
 	public InventoryExtremeCrafter(TileExtremeCrafter tile) {
 		super(tile, 83);
 		this.tile = tile;
+		slots = IntStream.rangeClosed(0, 81).toArray();
 	}
 
 	@Override

@@ -73,7 +73,6 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 			if(level.getGameTime() % 8 == 0) {
 				ejectItems();
 			}
-			energyStorage.updateIfChanged();
 		}
 	}
 

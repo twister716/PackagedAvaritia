@@ -40,8 +40,8 @@ sourceSets {
 }
 
 def mcVersion = "1.18.2"
-def modName = "PackagedAuto"
-def modId = "packagedauto"
+def modName = "PackagedAvaritia"
+def modId = "packagedavaritia"
 def specVersion = "2"
 def vendor = "thelm"
 

@@ -36,7 +36,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		input.clear();
 		output = ItemStack.EMPTY;
 		patterns.clear();
-		Recipe recipe = MiscHelper.INSTANCE.getRecipeManager().byKey(new ResourceLocation(nbt.getString("Recipe"))).orElse(null);
+		Recipe<?> recipe = MiscHelper.INSTANCE.getRecipeManager().byKey(new ResourceLocation(nbt.getString("Recipe"))).orElse(null);
 		List<ItemStack> matrixList = new ArrayList<>();
 		MiscHelper.INSTANCE.loadAllItems(nbt.getList("Matrix", 10), matrixList);
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
@@ -45,7 +45,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		if(recipe instanceof ExtremeCraftingRecipe extremeRecipe) {
 			this.recipe = extremeRecipe;
 			input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
-			output = recipe.assemble(matrix).copy();
+			output = this.recipe.assemble(matrix).copy();
 			for(int i = 0; i*9 < input.size(); ++i) {
 				patterns.add(new PackagePattern(this, i));
 			}

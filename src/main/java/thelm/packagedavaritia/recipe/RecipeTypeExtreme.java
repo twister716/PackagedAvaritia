@@ -64,16 +64,6 @@ public class RecipeTypeExtreme implements IRecipeType {
 	}
 
 	@Override
-	public boolean canSetOutput() {
-		return false;
-	}
-
-	@Override
-	public boolean hasMachine() {
-		return true;
-	}
-
-	@Override
 	public List<String> getJEICategories() {
 		return CATEGORIES;
 	}

@@ -24,8 +24,8 @@ public class PackagedAvaritia {
 
 	public static final String MOD_ID = "packagedavaritia";
 	public static final String NAME = "PackagedAvaritia";
-	public static final String VERSION = "1.12.2-1.0.2.12";
-	public static final String DEPENDENCIES = "required-after:packagedauto@[1.12.2-1.0.8,);required-after:avaritia;";
+	public static final String VERSION = "1.12.2-1.0.2.13";
+	public static final String DEPENDENCIES = "required-after:packagedauto@[1.12.2-1.0.10,);required-after:avaritia;";
 	public static final String GUI_FACTORY = "thelm.packagedavaritia.client.gui.GuiPackagedAvaritiaConfigFactory";
 	public static final CreativeTabs CREATIVE_TAB = new CreativeTabs("packagedavaritia") {
 		@SideOnly(Side.CLIENT)

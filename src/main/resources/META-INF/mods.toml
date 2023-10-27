@@ -27,6 +27,6 @@ description="A PackagedAuto addon that adds Avaritia autocrafting."
 [[dependencies.packagedavaritia]]
     modId="packagedauto"
     mandatory=true
-    versionRange="[3.1.4,)"
+    versionRange="[3.1.6,)"
     ordering="NONE"
     side="BOTH"

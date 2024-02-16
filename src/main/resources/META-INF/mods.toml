@@ -1,32 +1,28 @@
-modLoader="javafml"
-loaderVersion="[40,)"
-license="MIT"
-issueTrackerURL="https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/packagedavaritia"
-authors="TheLMiffy1111"
+modLoader = "javafml"
+loaderVersion = "[40,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
+
 [[mods]]
-modId="packagedavaritia"
-version="${file.jarVersion}"
-displayName="PackagedAvaritia"
-description="A PackagedAuto addon that adds Avaritia autocrafting."
+	modId = "packagedavaritia"
+	version = "0@VERSION@"
+	displayName = "PackagedAvaritia"
+	description = "A PackagedAuto addon that adds Avaritia autocrafting."
+	logoFile = "packagedavaritia.logo.png"
+	authors = "TheLMiffy1111"
+	displayURL = "https://www.curseforge.com/minecraft/mc-mods/packagedavaritia"
 
 [[dependencies.packagedavaritia]]
-    modId="forge"
-    mandatory=true
-    versionRange="[40,)"
-    ordering="NONE"
-    side="BOTH"
+	modId = "forge"
+	versionRange = "[40,)"
+	mandatory = true
 
 [[dependencies.packagedavaritia]]
-    modId="avaritia"
-    mandatory=true
-    versionRange="[4,)"
-    ordering="NONE"
-    side="BOTH"
+	modId = "packagedauto"
+	versionRange = "[3.1.6,)"
+	mandatory = true
 
 [[dependencies.packagedavaritia]]
-    modId="packagedauto"
-    mandatory=true
-    versionRange="[3.1.6,)"
-    ordering="NONE"
-    side="BOTH"
+	modId = "avaritia"
+	versionRange = "[4,)"
+	mandatory = true

@@ -1,23 +1,23 @@
 package thelm.packagedavaritia.slot;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
-import thelm.packagedavaritia.block.entity.ExtremeCrafterBlockEntity;
+import thelm.packagedavaritia.tile.ExtremeCrafterTile;
 
 //Code from CoFHCore
 public class ExtremeCrafterRemoveOnlySlot extends SlotItemHandler {
 
-	public final ExtremeCrafterBlockEntity blockEntity;
+	public final ExtremeCrafterTile tile;
 
-	public ExtremeCrafterRemoveOnlySlot(ExtremeCrafterBlockEntity blockEntity, int index, int x, int y) {
-		super(blockEntity.getItemHandler(), index, x, y);
-		this.blockEntity = blockEntity;
+	public ExtremeCrafterRemoveOnlySlot(ExtremeCrafterTile tile, int index, int x, int y) {
+		super(tile.getItemHandler(), index, x, y);
+		this.tile = tile;
 	}
 
 	@Override
-	public boolean mayPickup(Player player) {
-		return !blockEntity.isWorking;
+	public boolean mayPickup(PlayerEntity playerIn) {
+		return !tile.isWorking;
 	}
 
 	@Override

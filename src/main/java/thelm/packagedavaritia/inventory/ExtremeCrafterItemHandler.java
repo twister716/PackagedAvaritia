@@ -1,15 +1,15 @@
 package thelm.packagedavaritia.inventory;
 
-import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import thelm.packagedauto.inventory.BaseItemHandler;
-import thelm.packagedavaritia.block.entity.ExtremeCrafterBlockEntity;
+import thelm.packagedavaritia.tile.ExtremeCrafterTile;
 
-public class ExtremeCrafterItemHandler extends BaseItemHandler<ExtremeCrafterBlockEntity> {
+public class ExtremeCrafterItemHandler extends BaseItemHandler<ExtremeCrafterTile> {
 
-	public ExtremeCrafterItemHandler(ExtremeCrafterBlockEntity blockEntity) {
+	public ExtremeCrafterItemHandler(ExtremeCrafterTile blockEntity) {
 		super(blockEntity, 83);
 	}
 
@@ -28,20 +28,26 @@ public class ExtremeCrafterItemHandler extends BaseItemHandler<ExtremeCrafterBlo
 
 	@Override
 	public int get(int id) {
-		return switch(id) {
-		case 0 -> blockEntity.remainingProgress;
-		case 1 -> blockEntity.isWorking ? 1 : 0;
-		case 2 -> blockEntity.getEnergyStorage().getEnergyStored();
-		default -> 0;
-		};
+		switch(id) {
+		case 0: return tile.remainingProgress;
+		case 1: return tile.isWorking ? 1 : 0;
+		case 2: return tile.getEnergyStorage().getEnergyStored();
+		default: return 0;
+		}
 	}
 
 	@Override
 	public void set(int id, int value) {
 		switch(id) {
-		case 0 -> blockEntity.remainingProgress = value;
-		case 1 -> blockEntity.isWorking = value != 0;
-		case 2 -> blockEntity.getEnergyStorage().setEnergyStored(value);
+		case 0:
+			tile.remainingProgress = value;
+			break;
+		case 1:
+			tile.isWorking = value != 0;
+			break;
+		case 2:
+			tile.getEnergyStorage().setEnergyStored(value);
+			break;
 		}
 	}
 

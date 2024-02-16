@@ -1,8 +1,9 @@
 package thelm.packagedavaritia;
 
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import thelm.packagedavaritia.block.ExtremeCrafterBlock;
@@ -13,7 +14,8 @@ import thelm.packagedavaritia.event.CommonEventHandler;
 public class PackagedAvaritia {
 
 	public static final String MOD_ID = "packagedavaritia";
-	public static final CreativeModeTab CREATIVE_TAB = new CreativeModeTab("packagedavaritia") {
+	public static final ItemGroup ITEM_GROUP = new ItemGroup("packagedavaritia") {
+		@OnlyIn(Dist.CLIENT)
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(ExtremeCrafterBlock.INSTANCE);

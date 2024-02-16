@@ -2,18 +2,19 @@ package thelm.packagedavaritia.recipe;
 
 import java.util.List;
 
-import morph.avaritia.api.ExtremeCraftingRecipe;
-import net.minecraft.world.Container;
-import net.minecraft.world.item.ItemStack;
+import com.yuo.endless.Recipe.IExtremeCraftRecipe;
+
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import thelm.packagedauto.api.IPackageRecipeInfo;
 
 public interface IExtremePackageRecipeInfo extends IPackageRecipeInfo {
 
 	ItemStack getOutput();
 
-	ExtremeCraftingRecipe getRecipe();
+	IExtremeCraftRecipe getRecipe();
 
-	Container getMatrix();
+	IInventory getMatrix();
 
 	List<ItemStack> getRemainingItems();
 

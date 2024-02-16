@@ -5,45 +5,51 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.yuo.endless.Recipe.ExtremeCraftingManager;
+import com.yuo.endless.Recipe.IExtremeCraftRecipe;
+import com.yuo.endless.Recipe.RecipeTypeRegistry;
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import morph.avaritia.api.ExtremeCraftingRecipe;
-import morph.avaritia.init.AvaritiaModContent;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Level;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import thelm.packagedauto.api.IPackagePattern;
 import thelm.packagedauto.api.IPackageRecipeType;
-import thelm.packagedauto.menu.EmptyMenu;
+import thelm.packagedauto.container.EmptyContainer;
 import thelm.packagedauto.util.MiscHelper;
 import thelm.packagedauto.util.PackagePattern;
 
 public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 
-	ExtremeCraftingRecipe recipe;
+	IExtremeCraftRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
-	CraftingContainer matrix = new CraftingContainer(new EmptyMenu(), 9, 9);
+	CraftingInventory matrix = new CraftingInventory(new EmptyContainer(), 9, 9);
 	ItemStack output;
 	List<IPackagePattern> patterns = new ArrayList<>();
 
 	@Override
-	public void load(CompoundTag nbt) {
+	public void read(CompoundNBT nbt) {
 		input.clear();
 		output = ItemStack.EMPTY;
 		patterns.clear();
-		Recipe<?> recipe = MiscHelper.INSTANCE.getRecipeManager().byKey(new ResourceLocation(nbt.getString("Recipe"))).orElse(null);
+		IRecipe<?> recipe = MiscHelper.INSTANCE.getRecipeManager().byKey(new ResourceLocation(nbt.getString("Recipe"))).orElse(null);
+		if(recipe == null) {
+			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
+					filter(r->r.getId().equals(new ResourceLocation(nbt.getString("Recipe")))).findFirst().orElse(null);
+		}
 		List<ItemStack> matrixList = new ArrayList<>();
 		MiscHelper.INSTANCE.loadAllItems(nbt.getList("Matrix", 10), matrixList);
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
 			matrix.setItem(i, matrixList.get(i));
 		}
-		if(recipe instanceof ExtremeCraftingRecipe extremeRecipe) {
-			this.recipe = extremeRecipe;
+		if(recipe instanceof IExtremeCraftRecipe) {
+			this.recipe = (IExtremeCraftRecipe)recipe;
 			input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
 			output = this.recipe.assemble(matrix).copy();
 			for(int i = 0; i*9 < input.size(); ++i) {
@@ -53,7 +59,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
-	public void save(CompoundTag nbt) {
+	public CompoundNBT write(CompoundNBT nbt) {
 		if(recipe != null) {
 			nbt.putString("Recipe", recipe.getId().toString());
 		}
@@ -61,8 +67,9 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		for(int i = 0; i < 81; ++i) {
 			matrixList.add(matrix.getItem(i));
 		}
-		ListTag matrixTag = MiscHelper.INSTANCE.saveAllItems(new ListTag(), matrixList);
+		ListNBT matrixTag = MiscHelper.INSTANCE.saveAllItems(new ListNBT(), matrixList);
 		nbt.put("Matrix", matrixTag);
+		return nbt;
 	}
 
 	@Override
@@ -91,12 +98,12 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
-	public ExtremeCraftingRecipe getRecipe() {
+	public IExtremeCraftRecipe getRecipe() {
 		return recipe;
 	}
 
 	@Override
-	public Container getMatrix() {
+	public IInventory getMatrix() {
 		return matrix;
 	}
 
@@ -106,7 +113,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
-	public void generateFromStacks(List<ItemStack> input, List<ItemStack> output, Level level) {
+	public void generateFromStacks(List<ItemStack> input, List<ItemStack> output, World world) {
 		recipe = null;
 		this.input.clear();
 		patterns.clear();
@@ -115,7 +122,11 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		ExtremeCraftingRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(AvaritiaModContent.EXTREME_CRAFTING_RECIPE_TYPE.get(), matrix, level).orElse(null);
+		IExtremeCraftRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(RecipeTypeRegistry.EXTREME_CRAFT_RECIPE, matrix, world).orElse(null);
+		if(recipe == null) {
+			recipe = ExtremeCraftingManager.getInstance().getRecipeList().stream().
+					filter(r->r.checkRecipe(matrix, world)).findFirst().orElse(null);
+		}
 		if(recipe != null) {
 			this.recipe = recipe;
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));

@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[40,)"
+loaderVersion = "[34,)"
 license = "MIT"
 issueTrackerURL = "https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
 
@@ -12,17 +12,17 @@ issueTrackerURL = "https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
 	authors = "TheLMiffy1111"
 	displayURL = "https://www.curseforge.com/minecraft/mc-mods/packagedavaritia"
 
-[[dependencies.packagedavaritia]]
-	modId = "forge"
-	versionRange = "[40,)"
-	mandatory = true
+[[dependencies.packagedexcrafting]]
+	modId="forge"
+	versionRange="[34,)"
+	mandatory=true
+
+[[dependencies.packagedexcrafting]]
+	modId="packagedauto"
+	versionRange="[2.0.5,)"
+	mandatory=true
 
 [[dependencies.packagedavaritia]]
-	modId = "packagedauto"
-	versionRange = "[3.1.6,)"
-	mandatory = true
-
-[[dependencies.packagedavaritia]]
-	modId = "avaritia"
-	versionRange = "[4,)"
+	modId = "endless"
+	versionRange = "[1.16.5-1,)"
 	mandatory = true

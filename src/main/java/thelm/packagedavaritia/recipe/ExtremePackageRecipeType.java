@@ -68,7 +68,6 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 	public Int2ObjectMap<ItemStack> getRecipeTransferMap(IRecipeSlotsViewWrapper recipeLayoutWrapper) {
 		Int2ObjectMap<ItemStack> map = new Int2ObjectOpenHashMap<>();
 		List<IRecipeSlotViewWrapper> slotViews = recipeLayoutWrapper.getRecipeSlotViews();
-		System.out.println(slotViews.size());
 		int index = 0;
 		int[] slotArray = SLOTS.toIntArray();
 		for(IRecipeSlotViewWrapper slotView : slotViews) {

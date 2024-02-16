@@ -57,7 +57,6 @@ public class CommonEventHandler {
 	@SubscribeEvent
 	public void onCommonSetup(FMLCommonSetupEvent event) {
 		ApiImpl.INSTANCE.registerRecipeType(ExtremePackageRecipeType.INSTANCE);
-		System.out.println();
 	}
 
 	@SubscribeEvent

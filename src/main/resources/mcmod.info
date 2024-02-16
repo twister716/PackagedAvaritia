@@ -1,0 +1,11 @@
+[
+	{
+		"modid": "packagedavaritia",
+		"version": "0@VERSION@",
+		"name": "PackagedAvaritia",
+		"description": "A PackagedAuto addon that adds Avaritia autocrafting.",
+		"logoFile": "packagedavaritia.logo.png",
+		"authorList": ["TheLMiffy1111"],
+		"url": "https://www.curseforge.com/minecraft/mc-mods/packagedavaritia"
+	}
+]

@@ -43,7 +43,7 @@ public class CommonEventHandler {
 	}
 
 	@SubscribeEvent
-	public void onBlockEntityRegister(RegistryEvent.Register<TileEntityType<?>> event) {
+	public void onTileEntityRegister(RegistryEvent.Register<TileEntityType<?>> event) {
 		IForgeRegistry<TileEntityType<?>> registry = event.getRegistry();
 		registry.register(ExtremeCrafterTile.TYPE_INSTANCE);
 	}

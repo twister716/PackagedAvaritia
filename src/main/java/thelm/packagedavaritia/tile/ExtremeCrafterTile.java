@@ -77,7 +77,8 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 
 	@Override
 	public boolean acceptPackage(IPackageRecipeInfo recipeInfo, List<ItemStack> stacks, Direction direction) {
-		if(!isBusy() && recipeInfo instanceof IExtremePackageRecipeInfo recipe) {
+		if(!isBusy() && recipeInfo instanceof IExtremePackageRecipeInfo) {
+			IExtremePackageRecipeInfo recipe = (IExtremePackageRecipeInfo)recipeInfo;
 			ItemStack slotStack = itemHandler.getStackInSlot(81);
 			ItemStack outputStack = recipe.getOutput();
 			if(slotStack.isEmpty() || slotStack.getItem() == outputStack.getItem() && ItemStack.tagMatches(slotStack, outputStack) && slotStack.getCount()+outputStack.getCount() <= outputStack.getMaxStackSize()) {
@@ -178,8 +179,8 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 		if(nbt.contains("Recipe")) {
 			CompoundNBT tag = nbt.getCompound("Recipe");
 			IPackageRecipeInfo recipe = MiscHelper.INSTANCE.readRecipe(tag);
-			if(recipe instanceof IExtremePackageRecipeInfo extremeRecipe) {
-				currentRecipe = extremeRecipe;
+			if(recipe instanceof IExtremePackageRecipeInfo) {
+				currentRecipe = (IExtremePackageRecipeInfo)recipe;
 			}
 		}
 	}

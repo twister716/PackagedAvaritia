@@ -9,8 +9,8 @@ import thelm.packagedavaritia.tile.ExtremeCrafterTile;
 
 public class ExtremeCrafterItemHandler extends BaseItemHandler<ExtremeCrafterTile> {
 
-	public ExtremeCrafterItemHandler(ExtremeCrafterTile blockEntity) {
-		super(blockEntity, 83);
+	public ExtremeCrafterItemHandler(ExtremeCrafterTile tile) {
+		super(tile, 83);
 	}
 
 	@Override

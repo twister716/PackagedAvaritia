@@ -1,5 +1,6 @@
 package thelm.packagedavaritia.recipe;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.yuo.endless.Recipe.IExtremeCraftRecipe;
@@ -20,6 +21,6 @@ public interface IExtremePackageRecipeInfo extends IPackageRecipeInfo {
 
 	@Override
 	default List<ItemStack> getOutputs() {
-		return List.of(getOutput());
+		return Collections.singletonList(getOutput());
 	}
 }

@@ -1,5 +1,6 @@
 package thelm.packagedavaritia.recipe;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -25,7 +26,7 @@ public class ExtremePackageRecipeType implements IPackageRecipeType {
 	public static final ExtremePackageRecipeType INSTANCE = new ExtremePackageRecipeType();
 	public static final ResourceLocation NAME = new ResourceLocation("packagedavaritia:extreme");
 	public static final IntSet SLOTS;
-	public static final List<ResourceLocation> CATEGORIES = List.of(new ResourceLocation("endless:extreme_craft"));
+	public static final List<ResourceLocation> CATEGORIES = Collections.singletonList(new ResourceLocation("endless:extreme_craft"));
 	public static final Vector3i COLOR = new Vector3i(139, 139, 139);
 	public static final Vector3i COLOR_DISABLED = new Vector3i(64, 64, 64);
 

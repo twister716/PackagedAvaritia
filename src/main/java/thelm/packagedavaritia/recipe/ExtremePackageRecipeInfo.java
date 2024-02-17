@@ -150,7 +150,8 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof ExtremePackageRecipeInfo other) {
+		if(obj instanceof ExtremePackageRecipeInfo) {
+			ExtremePackageRecipeInfo other = (ExtremePackageRecipeInfo)obj;
 			if(input.size() != other.input.size()) {
 				return false;
 			}

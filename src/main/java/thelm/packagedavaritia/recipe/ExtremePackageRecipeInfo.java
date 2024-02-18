@@ -11,8 +11,8 @@ import com.yuo.endless.Recipe.RecipeTypeRegistry;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import thelm.packagedauto.api.IPackagePattern;
 import thelm.packagedauto.api.IPackageRecipeType;
-import thelm.packagedauto.container.EmptyContainer;
 import thelm.packagedauto.util.MiscHelper;
 import thelm.packagedauto.util.PackagePattern;
 
@@ -29,7 +28,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 
 	IExtremeCraftRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
-	CraftingInventory matrix = new CraftingInventory(new EmptyContainer(), 9, 9);
+	IInventory matrix = new Inventory(81);
 	ItemStack output;
 	List<IPackagePattern> patterns = new ArrayList<>();
 

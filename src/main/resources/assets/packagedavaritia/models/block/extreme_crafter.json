@@ -1,8 +1,8 @@
 {
-    "parent": "block/cube_bottom_top",
-    "textures": {
-        "side": "packagedavaritia:blocks/extreme_crafter_side",
-        "top": "packagedavaritia:blocks/extreme_crafter_top",
-        "bottom": "packagedavaritia:blocks/extreme_crafter_bottom"
-    }
+	"parent": "block/cube_bottom_top",
+	"textures": {
+		"side": "packagedavaritia:blocks/extreme_crafter_side",
+		"top": "packagedavaritia:blocks/extreme_crafter_top",
+		"bottom": "packagedavaritia:blocks/extreme_crafter_bottom"
+	}
 }

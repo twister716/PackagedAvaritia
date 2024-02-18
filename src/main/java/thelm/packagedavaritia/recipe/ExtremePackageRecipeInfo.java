@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import committee.nova.mods.avaritia.common.crafting.recipe.ICraftRecipe;
+import committee.nova.mods.avaritia.init.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import morph.avaritia.api.ExtremeCraftingRecipe;
-import morph.avaritia.init.AvaritiaModContent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +25,7 @@ import thelm.packagedauto.util.PackagePattern;
 
 public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 
-	ExtremeCraftingRecipe recipe;
+	ICraftRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
 	CraftingContainer matrix = new CraftingContainer(new EmptyMenu(), 9, 9);
 	ItemStack output;
@@ -42,7 +42,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
 			matrix.setItem(i, matrixList.get(i));
 		}
-		if(recipe instanceof ExtremeCraftingRecipe extremeRecipe) {
+		if(recipe instanceof ICraftRecipe extremeRecipe) {
 			this.recipe = extremeRecipe;
 			input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
 			output = this.recipe.assemble(matrix).copy();
@@ -91,7 +91,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
-	public ExtremeCraftingRecipe getRecipe() {
+	public ICraftRecipe getRecipe() {
 		return recipe;
 	}
 
@@ -115,7 +115,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		ExtremeCraftingRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(AvaritiaModContent.EXTREME_CRAFTING_RECIPE_TYPE.get(), matrix, level).orElse(null);
+		ICraftRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTREME_CRAFT_RECIPE.get(), matrix, level).orElse(null);
 		if(recipe != null) {
 			this.recipe = recipe;
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));

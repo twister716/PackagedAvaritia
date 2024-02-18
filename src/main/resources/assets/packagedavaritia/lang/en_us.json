@@ -1,8 +1,8 @@
 {
-    "itemGroup.packagedavaritia": "PackagedAvaritia",
-    
-    "block.packagedavaritia.extreme_crafter": "Extreme Package Crafter",
+	"itemGroup.packagedavaritia": "PackagedAvaritia",
+	
+	"block.packagedavaritia.extreme_crafter": "Extreme Package Crafter",
 
-    "recipe.packagedavaritia.extreme": "Extreme Crafting",
-    "recipe.packagedavaritia.extreme.short": "Extreme"
+	"recipe.packagedavaritia.extreme": "Extreme Crafting",
+	"recipe.packagedavaritia.extreme.short": "Extreme"
 }

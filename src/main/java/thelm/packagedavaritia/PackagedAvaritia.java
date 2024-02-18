@@ -21,12 +21,10 @@ public class PackagedAvaritia {
 			return new ItemStack(ExtremeCrafterBlock.INSTANCE);
 		}
 	};
-	public static PackagedAvaritia core;
 
 	public PackagedAvaritia() {
-		core = this;
 		CommonEventHandler.getInstance().onConstruct();
-		DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
 			ClientEventHandler.getInstance().onConstruct();
 		});
 	}

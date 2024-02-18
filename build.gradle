@@ -115,7 +115,7 @@ dependencies {
 	forge "net.minecraftforge:forge:1.18.2-40.2.17"
 
 	// Dependencies
-	modImplementation "curse.maven:packagedauto-308380:5110888"
+	modImplementation "curse.maven:packagedauto-308380:5118647"
 	modImplementation "codechicken:CodeChickenLib:1.18.2-4.1.4.488:universal"
 	modImplementation "curse.maven:avaritia-1-10-261348:4406602"
 	modImplementation("mezz.jei:jei-1.18.2-forge:10.2.1.1006") {transitive = false}

@@ -13,12 +13,6 @@ import thelm.packagedavaritia.event.CommonEventHandler;
 public class PackagedAvaritia {
 
 	public static final String MOD_ID = "packagedavaritia";
-	public static final CreativeModeTab CREATIVE_TAB = new CreativeModeTab("packagedavaritia") {
-		@Override
-		public ItemStack makeIcon() {
-			return new ItemStack(ExtremeCrafterBlock.INSTANCE);
-		}
-	};
 	public static PackagedAvaritia core;
 
 	public PackagedAvaritia() {

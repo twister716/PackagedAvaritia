@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import committee.nova.mods.avaritia.common.crafting.recipe.ICraftRecipe;
+import committee.nova.mods.avaritia.api.common.crafting.ISpecialRecipe;
 import committee.nova.mods.avaritia.init.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -13,21 +13,20 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import thelm.packagedauto.api.IPackagePattern;
 import thelm.packagedauto.api.IPackageRecipeType;
-import thelm.packagedauto.menu.EmptyMenu;
 import thelm.packagedauto.util.MiscHelper;
 import thelm.packagedauto.util.PackagePattern;
 
 public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 
-	ICraftRecipe recipe;
+	ISpecialRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
-	CraftingContainer matrix = new CraftingContainer(new EmptyMenu(), 9, 9);
+	Container matrix = new SimpleContainer(81);
 	ItemStack output;
 	List<IPackagePattern> patterns = new ArrayList<>();
 
@@ -42,10 +41,10 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
 			matrix.setItem(i, matrixList.get(i));
 		}
-		if(recipe instanceof ICraftRecipe extremeRecipe) {
+		if(recipe instanceof ISpecialRecipe extremeRecipe) {
 			this.recipe = extremeRecipe;
 			input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
-			output = this.recipe.assemble(matrix).copy();
+			output = this.recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
 			for(int i = 0; i*9 < input.size(); ++i) {
 				patterns.add(new PackagePattern(this, i));
 			}
@@ -91,7 +90,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 	}
 
 	@Override
-	public ICraftRecipe getRecipe() {
+	public ISpecialRecipe getRecipe() {
 		return recipe;
 	}
 
@@ -115,11 +114,11 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 			toSet.setCount(1);
 			matrix.setItem(i, toSet.copy());
 		}
-		ICraftRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTREME_CRAFT_RECIPE.get(), matrix, level).orElse(null);
+		ISpecialRecipe recipe = MiscHelper.INSTANCE.getRecipeManager().getRecipeFor(ModRecipeTypes.EXTREME_CRAFT_RECIPE.get(), matrix, level).orElse(null);
 		if(recipe != null) {
 			this.recipe = recipe;
 			this.input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
-			this.output = recipe.assemble(matrix).copy();
+			this.output = recipe.assemble(matrix, level.registryAccess()).copy();
 			for(int i = 0; i*9 < this.input.size(); ++i) {
 				patterns.add(new PackagePattern(this, i));
 			}

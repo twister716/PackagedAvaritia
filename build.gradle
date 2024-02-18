@@ -67,7 +67,7 @@ def specVersion = "2"
 def vendor = "thelm"
 
 group = "thelm.packagedavaritia"
-version = "2.1.0.0"
+version = "2.1.0.1"
 
 archivesBaseName = "${modName}-${mcVersion}"
 

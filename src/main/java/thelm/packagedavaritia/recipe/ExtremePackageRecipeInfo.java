@@ -13,13 +13,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import thelm.packagedauto.api.IPackagePattern;
 import thelm.packagedauto.api.IPackageRecipeType;
-import thelm.packagedauto.menu.EmptyMenu;
 import thelm.packagedauto.util.MiscHelper;
 import thelm.packagedauto.util.PackagePattern;
 
@@ -27,7 +26,7 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 
 	ICraftRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
-	CraftingContainer matrix = new CraftingContainer(new EmptyMenu(), 9, 9);
+	Container matrix = new SimpleContainer(81);
 	ItemStack output;
 	List<IPackagePattern> patterns = new ArrayList<>();
 

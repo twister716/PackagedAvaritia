@@ -13,12 +13,10 @@ import thelm.packagedavaritia.event.CommonEventHandler;
 public class PackagedAvaritia {
 
 	public static final String MOD_ID = "packagedavaritia";
-	public static PackagedAvaritia core;
 
 	public PackagedAvaritia() {
-		core = this;
 		CommonEventHandler.getInstance().onConstruct();
-		DistExecutor.runWhenOn(Dist.CLIENT, ()->()->{
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()->()->{
 			ClientEventHandler.getInstance().onConstruct();
 		});
 	}

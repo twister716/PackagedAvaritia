@@ -19,7 +19,7 @@ issueTrackerURL = "https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
 
 [[dependencies.packagedavaritia]]
 	modId = "packagedauto"
-	versionRange = "[3.2.5,)"
+	versionRange = "[3.2.6,)"
 	mandatory = true
 
 [[dependencies.packagedavaritia]]

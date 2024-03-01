@@ -1,2 +1,1 @@
-Change asset indentation to tabs  
-Remove unnecessary mod instance  
+Update recipes to use utility equals and hashCode methods  

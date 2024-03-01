@@ -12,15 +12,15 @@ issueTrackerURL = "https://github.com/TheLMiffy1111/PackagedAvaritia/issues"
 	authors = "TheLMiffy1111"
 	displayURL = "https://www.curseforge.com/minecraft/mc-mods/packagedavaritia"
 
-[[dependencies.packagedexcrafting]]
-	modId="forge"
-	versionRange="[34,)"
-	mandatory=true
+[[dependencies.packagedavaritia]]
+	modId = "forge"
+	versionRange = "[34,)"
+	mandatory = true
 
-[[dependencies.packagedexcrafting]]
-	modId="packagedauto"
-	versionRange="[2.0.5,)"
-	mandatory=true
+[[dependencies.packagedavaritia]]
+	modId = "packagedauto"
+	versionRange = "[2.0.6,)"
+	mandatory = true
 
 [[dependencies.packagedavaritia]]
 	modId = "endless"

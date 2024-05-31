@@ -1,1 +1,1 @@
-Update recipes to use utility equals and hashCode methods  
+Use global registry access instead of world  

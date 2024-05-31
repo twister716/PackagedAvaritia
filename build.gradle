@@ -105,7 +105,7 @@ dependencies {
 	forge "net.minecraftforge:forge:1.19.2-43.3.8"
 
 	// Dependencies
-	modImplementation "curse.maven:packagedauto-308380:5385586"
+	modImplementation "curse.maven:packagedauto-308380:5386920"
 	modImplementation "curse.maven:re-avaritia-623969:4864671"
 	modImplementation("mezz.jei:jei-1.19.2-forge:11.6.0.1019") {transitive = false}
 	modImplementation "appeng:appliedenergistics2-forge:12.9.8"

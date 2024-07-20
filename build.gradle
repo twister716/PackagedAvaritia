@@ -1,5 +1,5 @@
 plugins {
-	id "com.crystaelix.loom" version "jitpack-6453f0f4"
+	id "com.crystaelix.loom" version "jitpack-ae847f1f"
 	id "eclipse"
 	id "idea"
 	id "maven-publish"
@@ -114,7 +114,7 @@ dependencies {
 	// Dependencies
 	modImplementation "curse.maven:packagedauto-308380:5505102"
 	modImplementation "curse.maven:avaritia-endless-624491:4373839"
-	modImplementation "mezz.jei:jei-1.16.5:7.8.0.1011"
+	modImplementation "mezz.jei:jei-1.16.5:7.8.0.1012"
 	modImplementation "appeng:appliedenergistics2:8.4.7"
 	modImplementation "vazkii.patchouli:Patchouli:1.16.4-53.3"
 

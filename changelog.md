@@ -1,1 +1,1 @@
-Update recipes to use utility equals and hashCode methods  
+Allow loading of invalid recipes and add validity checks  

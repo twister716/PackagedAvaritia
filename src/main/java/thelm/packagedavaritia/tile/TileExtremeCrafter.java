@@ -96,7 +96,7 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 
 	@Override
 	public boolean acceptPackage(IRecipeInfo recipeInfo, List<ItemStack> stacks, EnumFacing facing) {
-		if(!isBusy() && recipeInfo instanceof IRecipeInfoExtreme) {
+		if(!isBusy() && recipeInfo.isValid() && recipeInfo instanceof IRecipeInfoExtreme) {
 			IRecipeInfoExtreme recipe = (IRecipeInfoExtreme)recipeInfo;
 			ItemStack slotStack = inventory.getStackInSlot(81);
 			ItemStack outputStack = recipe.getOutput();

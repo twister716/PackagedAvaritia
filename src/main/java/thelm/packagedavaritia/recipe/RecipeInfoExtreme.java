@@ -1,7 +1,6 @@
 package thelm.packagedavaritia.recipe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 	IExtremeRecipe recipe;
 	List<ItemStack> input = new ArrayList<>();
 	InventoryCrafting matrix = new InventoryCrafting(new ContainerEmpty(), 9, 9);
-	ItemStack output;
+	ItemStack output = ItemStack.EMPTY;
 	List<IPackagePattern> patterns = new ArrayList<>();
 
 	@Override
@@ -40,12 +39,12 @@ public class RecipeInfoExtreme implements IRecipeInfoExtreme {
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
 			matrix.setInventorySlotContents(i, matrixList.get(i));
 		}
+		input.addAll(MiscUtil.condenseStacks(matrix));
+		for(int i = 0; i*9 < input.size(); ++i) {
+			patterns.add(new PatternHelper(this, i));
+		}
 		if(recipe != null) {
-			input.addAll(MiscUtil.condenseStacks(matrix));
 			output = recipe.getCraftingResult(matrix).copy();
-			for(int i = 0; i*9 < input.size(); ++i) {
-				patterns.add(new PatternHelper(this, i));
-			}
 		}
 	}
 

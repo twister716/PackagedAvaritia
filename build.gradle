@@ -67,7 +67,7 @@ def specVersion = "2"
 def vendor = "thelm"
 
 group = "thelm.packagedavaritia"
-version = "2.2.0.3"
+version = "2.2.0.4"
 
 archivesBaseName = "${modName}-${mcVersion}"
 
@@ -105,7 +105,7 @@ dependencies {
 	forge "net.minecraftforge:forge:1.20.1-47.3.1"
 
 	// Dependencies
-	modImplementation "curse.maven:packagedauto-308380:5505111"
+	modImplementation "curse.maven:packagedauto-308380:5568621"
 	modImplementation "curse.maven:re-avaritia-623969:5529708"
 	modImplementation("mezz.jei:jei-1.20.1-forge:15.8.0.16") {transitive = false}
 	modImplementation "appeng:appliedenergistics2-forge:15.2.9"

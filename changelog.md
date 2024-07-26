@@ -1,1 +1,1 @@
-Use global registry access instead of world  
+Allow loading of invalid recipes and add validity checks  

@@ -79,7 +79,7 @@ public class ExtremeCrafterBlockEntity extends BaseBlockEntity implements IPacka
 
 	@Override
 	public boolean acceptPackage(IPackageRecipeInfo recipeInfo, List<ItemStack> stacks, Direction direction) {
-		if(!isBusy() && recipeInfo instanceof IExtremePackageRecipeInfo recipe) {
+		if(!isBusy() && recipeInfo.isValid() && recipeInfo instanceof IExtremePackageRecipeInfo recipe) {
 			ItemStack slotStack = itemHandler.getStackInSlot(81);
 			ItemStack outputStack = recipe.getOutput();
 			if(slotStack.isEmpty() || ItemStack.isSameItemSameTags(slotStack, outputStack) && slotStack.getCount()+outputStack.getCount() <= outputStack.getMaxStackSize()) {

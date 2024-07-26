@@ -77,7 +77,7 @@ public class ExtremeCrafterTile extends BaseTile implements ITickableTileEntity,
 
 	@Override
 	public boolean acceptPackage(IPackageRecipeInfo recipeInfo, List<ItemStack> stacks, Direction direction) {
-		if(!isBusy() && recipeInfo instanceof IExtremePackageRecipeInfo) {
+		if(!isBusy() && recipeInfo.isValid() && recipeInfo instanceof IExtremePackageRecipeInfo) {
 			IExtremePackageRecipeInfo recipe = (IExtremePackageRecipeInfo)recipeInfo;
 			ItemStack slotStack = itemHandler.getStackInSlot(81);
 			ItemStack outputStack = recipe.getOutput();

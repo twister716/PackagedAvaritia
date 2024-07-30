@@ -40,13 +40,13 @@ public class ExtremePackageRecipeInfo implements IExtremePackageRecipeInfo {
 		for(int i = 0; i < 81 && i < matrixList.size(); ++i) {
 			matrix.setItem(i, matrixList.get(i));
 		}
-		input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
-		for(int i = 0; i*9 < input.size(); ++i) {
-			patterns.add(new PackagePattern(this, i));
-		}
 		if(recipe instanceof ISpecialRecipe extremeRecipe) {
 			this.recipe = extremeRecipe;
 			output = this.recipe.assemble(matrix, MiscHelper.INSTANCE.getRegistryAccess()).copy();
+		}
+		input.addAll(MiscHelper.INSTANCE.condenseStacks(matrix));
+		for(int i = 0; i*9 < input.size(); ++i) {
+			patterns.add(new PackagePattern(this, i));
 		}
 	}
 

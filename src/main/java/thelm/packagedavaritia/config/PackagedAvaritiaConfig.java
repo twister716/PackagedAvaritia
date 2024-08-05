@@ -34,7 +34,7 @@ public class PackagedAvaritiaConfig {
 	}
 
 	@SubscribeEvent
-	public void onConfigChanged(OnConfigChangedEvent event) {
+	public static void onConfigChanged(OnConfigChangedEvent event) {
 		if(event.getModID().equals("packagedavaritia")) {
 			init();
 		}

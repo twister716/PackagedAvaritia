@@ -250,15 +250,15 @@ public class TileExtremeCrafter extends TileBase implements ITickable, IPackageC
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		if(hostHelper != null) {
+			hostHelper.writeToNBT(nbt);
+		}
 		super.writeToNBT(nbt);
 		nbt.setBoolean("Working", isWorking);
 		nbt.setInteger("Progress", remainingProgress);
 		if(currentRecipe != null) {
 			NBTTagCompound tag = MiscUtil.writeRecipeToNBT(new NBTTagCompound(), currentRecipe);
 			nbt.setTag("Recipe", tag);
-		}
-		if(hostHelper != null) {
-			hostHelper.writeToNBT(nbt);
 		}
 		return nbt;
 	}
